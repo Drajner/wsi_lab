@@ -1,4 +1,4 @@
-
+import time
 
 def backpack(max_weight, items_weight, items_worth):
 
@@ -54,7 +54,10 @@ def backpackPW(max_weight, items_weight, items_worth):
 
     return items_in_backpack
 
+if __name__ == "__main__":
 
-print(backpack(9, [8, 3, 5, 2], [16, 8, 9, 6]))
-
-print(backpackPW(9, [8, 3, 5, 2], [16, 8, 9, 6]))
+    print(backpack(9, [8, 3, 5, 2], [16, 8, 9, 6]))
+    print(backpackPW(9, [8, 3, 5, 2], [16, 8, 9, 6]))
+    print(time.ctime())
+    backpack(9,[2,5,2,4,6,8,9,5,2,6,4,3,5,7,4,1,2,6,5,7,4,5,5],[5,7,3,5,8,2,5,8,9,1,4,7,8,4,2,1,4,5,3,2,8,5,7])
+    print(time.ctime())
