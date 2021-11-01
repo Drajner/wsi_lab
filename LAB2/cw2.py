@@ -6,44 +6,46 @@ from cec2017.functions import f1, f2, f3
 from autograd import grad
 
 
-MAX_X = 100
+MAX_X = 200
 PLOT_STEP = 0.1
 UPPER_BOUND = 100
 DIMENSIONALITY = 2
 
 
-def booth(x1, x2):
-    term1 = (x1 + 2*x2 - 7)**2
-    term2 = (2*x1 + x2 - 5)**2
-    y = term1 + term2
-    return y
+def booth(x):
+    return (x[0] + 2*x[1] - 7)**2 + (2*x[0] + x[1] - 5)**2
 
 
-#wylosuj punkt x:
-x = np.random.uniform(-UPPER_BOUND, UPPER_BOUND, size=DIMENSIONALITY)
+def steepest_descent_plot(fun, beta, steps):
+    x0 = np.random.uniform(-UPPER_BOUND, UPPER_BOUND, size=DIMENSIONALITY)
+    x = x0
+    way = [x]
+    for i in range(steps):
+        fun_gradient = grad(fun)
+        d = fun_gradient(x)
+        x = x - (beta * d)
+        way.append(x)
 
-#wyznacz ocenę x
-q = f1(x)
-print('q(x) = %.6f' %q)
+    x_arr = np.arange(-MAX_X, MAX_X, PLOT_STEP)
+    y_arr = np.arange(-MAX_X, MAX_X, PLOT_STEP)
+    X, Y = np.meshgrid(x_arr, y_arr)
+    Z = np.empty(X.shape)
 
-def gradient(x, q):
-    grad_fct = grad(q)
-    gradinet = grad_fct(x)
+    for i in range(X.shape[0]):
+        for j in range(X.shape[1]):
+            Z[i, j] = fun(np.array([X[i, j], Y[i, j]]))
+
+    plt.contour(X, Y, Z, 20)
+    for i in range(len(way)-1):
+        plt.arrow(way[i][0], way[i][1], way[i+1][0] - way[i][0], way[i+1][1] - way[i][1], head_width=2, head_length=2, fc='k', ec='k')
+    plt.show()
 
 
-x_arr = np.arange(-MAX_X, MAX_X, PLOT_STEP)
-y_arr = np.arange(-MAX_X, MAX_X, PLOT_STEP)
-X, Y = np.meshgrid(x_arr, y_arr)
-Z = np.empty(X.shape)
+def main():
+    steepest_descent_plot(booth, 0.05, 100)
+    #steepest_descent_plot(f1, 0.00000001, 1000)
+    #steepest_descent_plot(f2, 0.01, 1000)
+    #steepest_descent_plot(f3, 0.00005, 1000)
 
-q=f1
-
-for i in range(X.shape[0]):
-    for j in range(X.shape[1]):
-        Z[i, j] = q(np.array([X[i, j], Y[i, j]]))
-        
-plt.contour(X, Y, Z, 20)
-plt.arrow(0, 0, 50, 50, head_width=3, head_length=6, fc='k', ec='k')
-plt.show()
-  
-
+if __name__ == "__main__":
+    main()
