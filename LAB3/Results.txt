@@ -1,0 +1,19 @@
+Population size: 20   Mutation power: 0.1   Elite size: 15   min: 400.00220391790134   avg: 403.1668567061255   std: 4.157202725291816   max: 416.43029617069357
+Population size: 20   Mutation power: 0.1   Elite size: 10   min: 400.0280573862306   avg: 402.04925450201813   std: 1.824792862719052   max: 407.3844035396026
+Population size: 20   Mutation power: 0.1   Elite size: 5   min: 400.06679902325595   avg: 403.2903095326649   std: 4.548222212628088   max: 420.79530834885963
+Population size: 20   Mutation power: 0.1   Elite size: 3   min: 400.08069918524694   avg: 404.1567833643745   std: 8.376515238684938   max: 442.79435673685254
+Population size: 20   Mutation power: 0.1   Elite size: 2   min: 400.20032887732793   avg: 404.4302790886738   std: 6.259099368445635   max: 422.16062185855156
+Population size: 20   Mutation power: 0.1   Elite size: 1   min: 400.0041936813913   avg: 403.34779179968086   std: 7.197168057187067   max: 427.35512741939766
+*****
+Population size: 10   Mutation power: 0.1   Elite size: 3   min: 400.0901550157667   avg: 414.89928128366154   std: 33.17015804501635   max: 541.5260406831604
+Population size: 20   Mutation power: 0.1   Elite size: 3   min: 400.08069918524694   avg: 404.1567833643745   std: 8.376515238684938   max: 442.79435673685254
+Population size: 40   Mutation power: 0.1   Elite size: 3   min: 400.03446826339814   avg: 401.8455437696658   std: 1.6138426949640299   max: 406.0230135122125
+Population size: 60   Mutation power: 0.1   Elite size: 3   min: 400.0285761124188   avg: 401.2829835551284   std: 2.744002563244782   max: 413.57166759112823
+Population size: 100   Mutation power: 0.1   Elite size: 3   min: 400.00577447959523   avg: 400.57477751495503   std: 0.6885242995255864   max: 403.0185395123046
+*****
+Population size: 40   Mutation power: 0.1   Elite size: 3   min: 400.03446826339814   avg: 401.8455437696658   std: 1.6138426949640299   max: 406.0230135122125
+Population size: 40   Mutation power: 0.5   Elite size: 3   min: 400.02329412751163   avg: 401.78498264941254   std: 1.70016248324984   max: 406.69821283564784
+Population size: 40   Mutation power: 1   Elite size: 3   min: 400.0165702936324   avg: 401.6042102541459   std: 3.2718997704750046   max: 416.07697318716305
+Population size: 40   Mutation power: 5   Elite size: 3   min: 400.01303723515514   avg: 400.45164067877727   std: 0.7222739330217891   max: 402.9386791931036
+Population size: 40   Mutation power: 10   Elite size: 3   min: 400.00023542784953   avg: 400.21452309989246   std: 0.18823475349734797   max: 400.7378596894252
+Population size: 40   Mutation power: 25   Elite size: 3   min: 400.0005409590329   avg: 400.17745454181875   std: 0.30680713172933577   max: 401.5018357533787

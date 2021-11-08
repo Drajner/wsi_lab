@@ -4,8 +4,8 @@ import random
 
 UPPER_BOUND = 100
 ELITE_SIZE = 3
-MUTATION_POWER = 0.1
-POPULATION_SIZE = 60
+MUTATION_POWER = 25
+POPULATION_SIZE = 40
 
 def find_best(rating, population):
     best_rate = min(rating)
