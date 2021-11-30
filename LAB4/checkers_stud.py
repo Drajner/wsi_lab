@@ -526,7 +526,8 @@ def minimax_a_b(eval_type ,board, depth, move_max):
     for move in board.get_possible_moves(move_max):
         move_board = deepcopy(board)
         move_board.make_ai_move(move)
-        move_rating = minimax_a_b_recurr(eval_type, board, depth-1, move_max, -1000, 1000)
+        move_rating = minimax_a_b_recurr(eval_type, move_board, depth-1, move_max, -1000, 1000)
+        print(move_rating)
         move_rated = [move, move_rating]
         moves_rated.append(move_rated)
     if move_max:
@@ -539,7 +540,7 @@ def minimax_a_b(eval_type ,board, depth, move_max):
             if moves_rated[i][1] <= best_rating:
                 best_rating = moves_rated[i][1]
                 best_i = i
-    print(str(moves_rated[best_i][1]))
+    print(" ")
     return moves_rated[best_i][0]
 
 def minimax_a_b_recurr(eval_type, board, depth, move_max, a, b):
@@ -569,8 +570,6 @@ def minimax_a_b_recurr(eval_type, board, depth, move_max, a, b):
                 return a
         return b
     
-
-    #ToDo
 
 def main():
     window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
