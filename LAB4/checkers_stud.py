@@ -363,28 +363,36 @@ class Board:
                             h += 10
                         else:
                             h += 1
-                        if not self.board[row-1][col-1].is_empty() and self.board[row-1][col-1].is_blue():
-                            c += 1
-                        if not self.board[row-1][col+1].is_empty() and self.board[row-1][col+1].is_blue():
-                            c += 1
-                        if not self.board[row+1][col-1].is_empty() and self.board[row+1][col-1].is_blue():
-                            c += 1
-                        if not self.board[row+1][col-1].is_empty() and self.board[row+1][col+1].is_blue():
-                            c += 1
+                        if row-1 >= 0 and col-1 >= 0:
+                            if not self.board[row-1][col-1].is_empty() and self.board[row-1][col-1].is_blue():
+                                c += 1
+                        if row-1 >= 0 and col+1 <= 7:
+                            if not self.board[row-1][col+1].is_empty() and self.board[row-1][col+1].is_blue():
+                                c += 1
+                        if row+1 <= 7 and col-1 >= 0:
+                            if not self.board[row+1][col-1].is_empty() and self.board[row+1][col-1].is_blue():
+                                c += 1
+                        if row+1 <= 7 and col+1 <= 7:
+                            if not self.board[row+1][col-1].is_empty() and self.board[row+1][col+1].is_blue():
+                                c += 1
                     else:
                         if self.board[row][col].is_king():
                             h -= 10
                         else:
                             h -= 1
-                        if not self.board[row-1][col-1].is_empty() and not self.board[row-1][col-1].is_blue():
-                            c -= 1
-                        if not self.board[row-1][col+1].is_empty() and not self.board[row-1][col+1].is_blue():
-                            c -= 1
-                        if not self.board[row+1][col-1].is_empty() and not self.board[row+1][col-1].is_blue():
-                            c -= 1
-                        if not self.board[row+1][col-1].is_empty() and not self.board[row+1][col+1].is_blue():
-                            c -= 1
-                    c /= 2
+                        if row-1 >= 0 and col-1 >= 0:
+                            if not self.board[row-1][col-1].is_empty() and not self.board[row-1][col-1].is_blue():
+                                c -= 1
+                        if row-1 >= 0 and col+1 <= 7:
+                            if not self.board[row-1][col+1].is_empty() and not self.board[row-1][col+1].is_blue():
+                                c -= 1
+                        if row+1 <= 7 and col-1 >= 0:
+                            if not self.board[row+1][col-1].is_empty() and not self.board[row+1][col-1].is_blue():
+                                c -= 1
+                        if row+1 <= 7 and col+1 <= 7:
+                            if not self.board[row+1][col-1].is_empty() and not self.board[row+1][col+1].is_blue():
+                                c -= 1
+                    c = c // 2
                     h += c
         return h                        
     
@@ -521,16 +529,26 @@ def minimax_a_b(eval_type ,board, depth, move_max):
         move_rating = minimax_a_b_recurr(eval_type, board, depth-1, move_max, -1000, 1000)
         move_rated = [move, move_rating]
         moves_rated.append(move_rated)
-    for i in range(len(moves_rated)):
-        if moves_rated[i][1] >= best_rating:
-            best_rating = moves_rated[i][1]
-            best_i = i
+    if move_max:
+        for i in range(len(moves_rated)):
+            if moves_rated[i][1] >= best_rating:
+                best_rating = moves_rated[i][1]
+                best_i = i
+    else:
+        for i in range(len(moves_rated)):
+            if moves_rated[i][1] <= best_rating:
+                best_rating = moves_rated[i][1]
+                best_i = i
+    print(str(moves_rated[best_i][1]))
     return moves_rated[best_i][0]
 
 def minimax_a_b_recurr(eval_type, board, depth, move_max, a, b):
 
     if depth == 0 or board.end() in [0,1,2]:
-        return getattr(board, eval_type)()
+        if eval_type == 0: return board.eval0()
+        elif eval_type == 1: return board.eval1()
+        elif eval_type == 2: return board.eval2()
+        else: return board.eval3()
 
     successors = []
     for move in board.get_possible_moves(move_max):
@@ -546,8 +564,8 @@ def minimax_a_b_recurr(eval_type, board, depth, move_max, a, b):
         return a
     else:
         for possible_board in successors:
-            b = min(a, minimax_a_b_recurr(eval_type, possible_board, depth-1, not move_max, a, b))
-            if a >=b:
+            b = min(b, minimax_a_b_recurr(eval_type, possible_board, depth-1, not move_max, a, b))
+            if a >= b:
                 return a
         return b
     
@@ -579,7 +597,7 @@ def main():
             break #przydalby sie jakiś komunikat kto wygrał zamiast break
 
         if not game.board.white_turn:
-            move = minimax_a_b("eval3", deepcopy(game.board), MINIMAX_DEPTH, True)
+            move = minimax_a_b(0, deepcopy(game.board), MINIMAX_DEPTH, True)
             game.board.make_ai_move(move)
 
 
@@ -593,6 +611,44 @@ def main():
 
         game.update()
 
+    pygame.quit()
+
+def main2():
+    window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+    is_running = True
+    clock = pygame.time.Clock()
+    game = Game(window)
+    moves = 100
+    while is_running and moves >= 0:
+        clock.tick(FPS)
+
+
+        if game.board.end() in [0,1,2]:
+            ending_value = game.board.end()
+            is_running = False
+            if ending_value == 0:
+                print("Blue won!")
+            elif ending_value == 1:
+                print("White won!")
+            elif ending_value == 2:
+                if game.board.white_turn is True:
+                    print("Blue won!")
+                else:
+                    print("White won!")
+            break #przydalby sie jakiś komunikat kto wygrał zamiast break
+
+        if not game.board.white_turn:
+            move = minimax_a_b(3, deepcopy(game.board), 3, True)
+            game.board.make_ai_move(move)
+
+        else:
+            move = minimax_a_b(3, deepcopy(game.board), 3, False)
+            game.board.make_ai_move(move)
+        
+        moves -= 1
+        game.update()
+    if moves < 0:
+        print("DRAW")
     pygame.quit()
     
 main()    
